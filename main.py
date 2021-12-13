@@ -41,10 +41,10 @@ def search_website():
     try:
         with open("password_database.json", "r") as database:
             data = json.load(database)
+            ws_info = data[ws_search]
     except KeyError:
-        tk.messagebox.askokcancel(title="Error", text="Website not found")
+        tk.messagebox.askokcancel(title="Error", message="Website not found")
     else:
-        ws_info = data[ws_search]
         tk.messagebox.showinfo(title=[ws_search],
                                message=
                                f"e-mail: {ws_info['email']}\n"
