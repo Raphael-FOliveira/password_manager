@@ -44,6 +44,8 @@ def search_website():
             ws_info = data[ws_search]
     except KeyError:
         tk.messagebox.askokcancel(title="Error", message="Website not found")
+    except FileNotFoundError:
+        tk.messagebox.askokcancel(title="Error", message="Data file not found")
     else:
         tk.messagebox.showinfo(title=[ws_search],
                                message=
