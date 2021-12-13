@@ -4,6 +4,7 @@ from random import choice, randint, shuffle
 from pyperclip import copy
 import json
 
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 
@@ -31,6 +32,26 @@ def generate_password():
     copy(password_string)
     password_entry.insert(0, password_string)
 
+
+# ---------------------------- SEARCH WEBSITE ------------------------------ #
+
+
+def search_website():
+    ws_search = website_entry.get()
+    try:
+        with open("password_database.json", "r") as database:
+            data = json.load(database)
+    except KeyError:
+        tk.messagebox.askokcancel(title="Error", text="Website not found")
+    else:
+        ws_info = data[ws_search]
+        tk.messagebox.showinfo(title=[ws_search],
+                               message=
+                               f"e-mail: {ws_info['email']}\n"
+                               f"Password: {ws_info['password']}"
+                               )
+
+
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 
@@ -40,7 +61,7 @@ def save_password():
     password_data = password_entry.get()
     data_dict = {
         website_data: {
-            "email:": email_data,
+            "email": email_data,
             "password": password_data
         }
     }
@@ -83,8 +104,8 @@ password_label = tk.Label(text="Password")
 password_label.grid(row=3, column=0)
 
 website_entry = tk.Entry()
-website_entry.grid(row=1, column=1, columnspan=2)
-website_entry.config(width=35)
+website_entry.grid(row=1, column=1)
+website_entry.config(width=22)
 website_entry.focus()
 email_entry = tk.Entry()
 email_entry.grid(row=2, column=1, columnspan=2)
@@ -99,5 +120,8 @@ generate_button.config(width=10)
 add_button = tk.Button(text="Add", command=save_password)
 add_button.grid(row=4, column=0, columnspan=3)
 add_button.config(width=54)
+search_button = tk.Button(text="Search", command=search_website)
+search_button.grid(row=1, column=2)
+search_button.config(width=10)
 
 window.mainloop()
